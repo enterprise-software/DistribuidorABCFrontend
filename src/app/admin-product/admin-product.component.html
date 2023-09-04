@@ -1,0 +1,34 @@
+<div>
+    <button type="button" class="btn btn-success" [routerLink]="['/admin-product-add']">Adicionar un nuevo producto</button>
+</div>
+<ng-container *ngIf="!products">
+  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+</ng-container>
+<ng-container *ngIf="products">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Precio al detal</th>
+        <th scope="col">Precio al por mayor</th>
+        <th scope="col">Estiba</th>
+        <th scope="col">Posición en la estiba</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{product.productId}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.retailPrice | currency}}</td>
+            <td>{{product.wholeSalePrice | currency}}</td>
+            <td>{{product.stowageNumbers[0].stowageId}}</td>
+            <td>{{product.stowageNumbers[0].name}}</td>
+            <td><button type="button" class="btn btn-primary" (click)="goToEdit(product)" >Editar</button></td>
+            <td><button type="button" class="btn btn-danger" (click)="deleteProduct(product.productId)">Eliminar</button></td>
+        </tr>
+    </tbody>
+  </table>
+</ng-container>

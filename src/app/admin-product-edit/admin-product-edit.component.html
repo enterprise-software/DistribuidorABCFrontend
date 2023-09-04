@@ -1,0 +1,71 @@
+<ng-container *ngIf="addProductForm">
+    <div class="col-md-6 offset-md-3 mt-5">
+    <div class="card">
+      <h5 class="card-header">Editar un producto</h5>
+      <div class="card-body">
+        <form [formGroup]="addProductForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" formControlName="name" class="form-control" tabindex="1" autofocus
+              [ngClass]="{ 'is-invalid': submitted }" />
+            <div *ngIf="submitted" class="invalid-feedback">
+              <div *ngIf="addProductFormControl['name'].errors?.['required']">El nombre del producto es obligatorio</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description">Descripción</label>
+            <input type="text" formControlName="description" class="form-control" tabindex="2"
+              [ngClass]="{ 'is-invalid': submitted && addProductFormControl['description'].errors}" />
+            <div *ngIf="submitted && addProductFormControl['description'].errors" class="invalid-feedback">
+              <div *ngIf="addProductFormControl['description'].errors?.['required']">Password es obligatorio</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="retailPrice">Precio al detal</label>
+            <input type="number" formControlName="retailPrice" class="form-control" tabindex="2"
+              [ngClass]="{ 'is-invalid': submitted }" />
+            <div *ngIf="submitted && addProductFormControl['retailPrice'].errors" class="invalid-feedback">
+              <div *ngIf="addProductFormControl['retailPrice'].errors?.['required']">Precio al detal es obligatorio</div>
+            </div>
+          </div>          
+          <div class="form-group">
+            <label for="wholeSalePrice">Precio al por mayor</label>
+            <input type="number" formControlName="wholeSalePrice" class="form-control" tabindex="2"
+              [ngClass]="{ 'is-invalid': submitted }" />
+            <div *ngIf="submitted && addProductFormControl['wholeSalePrice'].errors" class="invalid-feedback">
+              <div *ngIf="addProductFormControl['wholeSalePrice'].errors?.['required']">Precio al por mayor es obligatorio</div>
+            </div>
+          </div>          
+        
+          <div class="form-group">
+            <label for="stowageId">Estibas disponibles</label>            
+            <select #stowageSelect class="form-select" aria-label="Default select example" formControlName="stowageId" (change)="onChangeStowage(stowageSelect.value)">
+                <option [value]="null" disabled>Seleccione la estiba</option>                
+                <option *ngFor = "let stowage of stowages" [value]="stowage.stowageId">{{stowage.description}}</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="stowageId">Posiciones en al estiba disponible</label>            
+            <select class="form-select" aria-label="Default select example" formControlName="stowageNumberName">
+                <option [value]="null" disabled>Seleccione la posición</option>                
+                <option *ngFor = "let stowageNumber of stowageNumberAvailable" [value]="stowageNumber.name">{{stowageNumber.name}}</option>
+            </select>
+          </div>
+
+
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Guardar
+          </button>
+          <button [disabled]="loading" class="btn btn-light" [routerLink]="['/admin-products']"> 
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Cancelar
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+  
